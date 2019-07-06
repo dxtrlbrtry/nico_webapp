@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    {% if title %}
+    <title> Nico Web - {{ title }} </title>
+    {% else %}
+    <title> Nico Web </title>
+    {% endif %}
+</head>
+<body>
+<main role="main">
+    <div class="header">
+        <h1 class="centered-text">Nico Website</h1>
+        <div class="row nav-bar">
+            <a class="nav-link" href="{{ url_for('main.home') }}">Content</a>
+            <a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a>
+            <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
+            <a class="nav-link" href="{{ url_for('main.upload_image') }}">Upload</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 content">
+            {% block content %}
+
+            {% endblock content %}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</main>
+<script src="{{ url_for('static', filename='bootstrap.bundle.js') }}"></script>
+</body>
+</html>

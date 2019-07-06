@@ -1,0 +1,26 @@
+.nav-bar {
+    justify-content: center;
+}
+
+.article-img {
+    max-height: 200px;
+    max-width: 200px;
+    min-height: 200px;
+    min-width: 200px;
+    justify-content: center;
+}
+
+.content-div {
+    height: 260px;
+    width: 25%;
+    padding: 10px;
+}
+
+.centered-text {
+    text-align: center;
+}
+
+.content {
+    background: #DDDDDD;
+}
+

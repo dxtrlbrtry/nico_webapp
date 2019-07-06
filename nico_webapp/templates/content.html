@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="row content">
+{% for image in images %}
+    <div class="content-div">
+        <a href="{{ url_for('main.view', image_id=image.id) }}">
+            <img class="article-img" src="{{ url_for('static', filename='pictures/' + image.image_file) }}">
+        </a>
+        <h6 class="centered-text mb-0 mt-2">{{ image.title }}</h6>
+    </div>
+{% endfor %}
+</div>
+{% endblock content %}
