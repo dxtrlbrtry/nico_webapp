@@ -1,0 +1,5 @@
+/__pycache__
+/.idea
+*.pyc
+/nico_webapp/database.db
+/nico_webapp/static/pictures/
