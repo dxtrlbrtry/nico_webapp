@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <h3>{{ image.title }}</h3>
-    <img src="{{ url_for('static', filename='pictures/' + image.image_file) }}"/>
+    <div class="centered mb-2 mt-2">
+        <h3>{{ image.title }}</h3>
+        <img src="{{ url_for('static', filename='pictures/' + image.image_file) }}"/>
+    </div>
+    <p class="image-description">{{ image.description }}</p>
 {% endblock content %}

@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block content %}
+<a class="nav-link" href="{{ url_for('main.upload_image') }}">Upload</a>
+{% for image in images %}
+    <div class="row">
+        <img style="height: 40px; width: 40px;" src="{{ url_for('static', filename='pictures/' + image.preview_image) }}"/>
+        <p>{{ image.title }}</p>
+        <a class="nav-link align-right" href="{{ url_for('main.edit_image', image_id=image.id) }}">Edit</a>
+        <a class="nav-link align-right" href="{{ url_for('main.delete_image', image_id=image.id) }}">Delete</a>
+    </div>
+{% endfor %}
+{% endblock content %}

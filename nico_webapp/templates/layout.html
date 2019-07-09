@@ -19,12 +19,11 @@
 <body>
 <main role="main">
     <div class="header">
-        <h1 class="centered-text">Nico Website</h1>
+        <h1 class="centered">Nico Website</h1>
         <div class="row nav-bar">
             <a class="nav-link" href="{{ url_for('main.home') }}">Content</a>
             <a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a>
             <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
-            <a class="nav-link" href="{{ url_for('main.upload_image') }}">Upload</a>
         </div>
     </div>
     <div class="row">
@@ -36,6 +35,14 @@
         </div>
         <div class="col-md-2"></div>
     </div>
+    <footer>
+        <a href="https://www.facebook.com/niQboy/" target="_blank">
+            <img class="social-media" src="{{ url_for('static', filename='icons/Facebook-Icon.png') }}"/>
+        </a>
+        <a href="https://www.instagram.com/buyingnewsoul/" target="_blank">
+            <img class="social-media" src="{{ url_for('static', filename='icons/Instagram-Icon.png') }}"/>
+        </a>
+    </footer>
 </main>
 <script src="{{ url_for('static', filename='bootstrap.bundle.js') }}"></script>
 </body>
