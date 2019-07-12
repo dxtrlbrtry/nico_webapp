@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, current_app
+from flask import Blueprint, render_template, redirect, url_for, current_app, request
 from flask_login import login_user, login_required
 from flask_mail import Message
 from nico_webapp.models import Image, User
@@ -31,10 +31,43 @@ def contact():
     return render_template('contact.html', title='Contact', form=form)
 
 
-@main.route('/view/<int:image_id>/', methods=['GET'])
-def view(image_id):
-    image = Image.query.get_or_404(image_id)
-    return render_template('view.html', image=image)
+@main.route('/view/<string:title>/', methods=['GET'])
+def view(title):
+    images = Image.query.all()
+    first_page = False
+    last_page = False
+    index = -1
+    for image in images:
+        if image.title == title:
+            index = images.index(image)
+            break
+    if index == 0:
+        first_page = True
+    if index == len(images) - 1:
+        last_page = True
+    return render_template('view.html', images=images, img=images[index], first_page=first_page, last_page=last_page)
+
+
+@main.route('/next/<string:current_title>', methods=['GET'])
+def next(current_title):
+    images = Image.query.all()
+    index = -1
+    for image in images:
+        if image.title == current_title:
+            index = images.index(image)
+            break
+    return redirect(url_for('main.view', title=images[index + 1].title))
+
+
+@main.route('/prev/<string:current_title>', methods=['GET'])
+def prev(current_title):
+    images = Image.query.all()
+    index = -1
+    for image in images:
+        if image.title == current_title:
+            index = images.index(image)
+            break
+    return redirect(url_for('main.view', title=images[index - 1].title))
 
 
 @main.route('/admin/', methods=['GET', 'POST'])
@@ -63,7 +96,10 @@ def upload_image():
         image = Image()
         image.title = form.title.data
         image.image_file = perform_upload(form.image.data)
-        image.preview_image = perform_upload(form.preview.data)
+        if form.preview.data:
+            image.preview_image = perform_upload(form.preview.data)
+        else:
+            image.preview_image = image.image_file
         if form.description.data:
             image.description = form.description.data
         db.session.add(image)
@@ -99,7 +135,8 @@ def edit_image(image_id):
 def delete_image(image_id):
     image = Image.query.get_or_404(image_id)
     os.remove(os.path.join(current_app.root_path, 'static/pictures/' + image.image_file))
-    os.remove(os.path.join(current_app.root_path, 'static/pictures/' + image.preview_image))
+    if image.preview_image != image.image_file:
+        os.remove(os.path.join(current_app.root_path, 'static/pictures/' + image.preview_image))
     db.session.delete(image)
     db.session.commit()
     return redirect(url_for('main.manage'))

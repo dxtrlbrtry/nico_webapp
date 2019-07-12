@@ -10,6 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='jquery-3.4.1.js') }}"></script>
     {% if title %}
     <title> Nico Web - {{ title }} </title>
     {% else %}
@@ -17,24 +18,22 @@
     {% endif %}
 </head>
 <body>
-<main role="main">
-    <div class="header">
+    <header class="header">
         <h1 class="centered">Nico Website</h1>
         <div class="row nav-bar">
             <a class="nav-link" href="{{ url_for('main.home') }}">Content</a>
             <a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a>
             <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 content">
+    </header>
+    <main role="main">
+        <div class="content">
             {% block content %}
 
             {% endblock content %}
         </div>
-        <div class="col-md-2"></div>
-    </div>
+        <div class="push"></div>
+    </main>
     <footer>
         <a href="https://www.facebook.com/niQboy/" target="_blank">
             <img class="social-media" src="{{ url_for('static', filename='icons/Facebook-Icon.png') }}"/>
@@ -43,7 +42,6 @@
             <img class="social-media" src="{{ url_for('static', filename='icons/Instagram-Icon.png') }}"/>
         </a>
     </footer>
-</main>
 <script src="{{ url_for('static', filename='bootstrap.bundle.js') }}"></script>
 </body>
 </html>

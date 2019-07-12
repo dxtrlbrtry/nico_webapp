@@ -1,10 +1,7 @@
 import os
-import secrets, jwt
-from flask import current_app, session, abort
+import secrets
+from flask import current_app
 from PIL import Image
-from functools import wraps
-from flask_jwt_extended import decode_token
-from nico_webapp.models import User
 
 
 def perform_upload(form_picture):
@@ -18,13 +15,3 @@ def perform_upload(form_picture):
     img.save(picture_path)
 
     return picture_fn
-
-
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = jwt.decode(session['access_token'])
-        if not User.query.filter_by(username=token['identity']):
-            return abort(404)
-        return f(*args, **kwargs)
-    return decorated()

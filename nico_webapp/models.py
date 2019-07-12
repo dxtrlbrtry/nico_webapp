@@ -1,5 +1,6 @@
 from nico_webapp import db, login_manager
 from flask_login import UserMixin
+import json
 
 
 @login_manager.user_loader
@@ -15,7 +16,9 @@ class Image(db.Model):
     description = db.Column(db.String(1000), nullable=True)
 
     def __repr__(self):
-        return f"Image(' {self.image_file}', '{self.title}')"
+        image = {'image_file': self.image_file, 'preview_image': self.preview_image, 'title': self.title,
+                 'description': self.description }
+        return json.dumps(image)
 
 
 class User(db.Model, UserMixin):

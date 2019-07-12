@@ -1,19 +1,19 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, TextAreaField, SubmitField, PasswordField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, length
 
 
 class UploadImageForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired(), length(max=20)])
     description = TextAreaField('Description', validators=[])
     image = FileField('Upload Image', validators=[FileAllowed(['jpg', 'png']), DataRequired()])
-    preview = FileField('Upload Preview', validators=[FileAllowed(['jpg', 'png']), DataRequired()])
+    preview = FileField('Upload Preview', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Upload')
 
 
 class EditImageForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired(), length(max=20)])
     description = TextAreaField('Description', validators=[])
     image = FileField('Upload Image', validators=[FileAllowed(['jpg', 'png'])])
     preview = FileField('Upload Preview', validators=[FileAllowed(['jpg', 'png'])])
