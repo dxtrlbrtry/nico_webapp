@@ -39,15 +39,6 @@
             {% endfor %}
             {% endif %}
         </div>
-        <div class="form-group">
-            {{ form.preview.label() }}
-            {{ form.preview(class="form-control-file") }}
-            {% if form.preview %}
-            {% for error in form.preview.errors %}
-            <span class="text-danger"> {{ error }} </span>
-            {% endfor %}
-            {% endif %}
-        </div>
     </fieldset>
     <div class="form-group">
         {{ form.submit(class="btn btn-outline-info") }}

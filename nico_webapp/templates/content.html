@@ -1,13 +1,101 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div class="centered">
-{% for image in images %}
-    <div class="image-container">
-        <a href="{{ url_for('main.view', title=image.title) }}">
-            <img class="preview-image" src="{{ url_for('static', filename='pictures/' + image.preview_image) }}">
-        </a>
-        <h6 class="centered mb-0 mt-2">{{ image.title }}</h6>
+<div id="expanded_container" style="display: none;">
+    <div class="centered">
+        <h3 id="image-title"></h3>
+        <img id="view-image" src=""/>
     </div>
-{% endfor %}
+    <div class="row nav-bar">
+        <a class="nav-link" id="btnPrev" onclick="prevImage()">Prev</a>
+        <a class="nav-link" id="btnNext" onclick="nextImage()">Next</a>
+    </div>
 </div>
+<div class="centered">
+    {% for image in images %}
+    <div class="layout-div">
+        <div class="image-container">
+            <a onclick="showImage({{ image }})">
+                <div class="content-overlay"></div>
+                <img title="{{ image.title }}" class="preview-image"
+                 src="{{ url_for('static', filename='pictures/' + image.image_file) }}"/>
+                <div class="content-details fadeIn-bottom">
+                    <h3 class="content-title">{{ image.title }}</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<script>
+    var images = document.getElementsByClassName("preview-image");
+    var expanded_container = document.getElementById("expanded_container");
+
+    function showImage(image) {
+        document.getElementById("view-image").src = '/static/pictures/' + image.image_file;
+        document.getElementById("image-title").innerHTML = image.title;
+
+        for (i = 0; i < images.length; i++) {
+            if (image.title == images[i].title) {
+                images[i].classList.add("image-selected");
+                setButtonState(i);
+            }
+            else {
+                images[i].classList.remove("image-selected");
+            }
+        }
+        expanded_container.style.display = "block";
+    }
+
+    function setButtonState(index) {
+        var btnPrev = document.getElementById("btnPrev");
+        if (index == 0) {
+            btnPrev.onclick = false;
+            btnPrev.style.color = "gray";
+        }
+        else {
+            btnPrev.onclick = prevImage;
+            btnPrev.style.color = "#b8321c";
+        }
+
+        var btnNext = document.getElementById("btnNext");
+        if (index == images.length-1) {
+            btnNext.onclick = false;
+            btnNext.style.color = "gray";
+        }
+        else {
+            btnNext.onclick = nextImage;
+            btnNext.style.color = "#b8321c";
+        }
+    }
+
+
+    function nextImage() {
+        var current_image = document.getElementById("view-image");
+        for (i = 0; i < images.length; i++) {
+            if (images[i].src == current_image.src) {
+                current_image.src = images[i+1].src;
+                images[i].classList.remove("image-selected");
+                images[i+1].classList.add("image-selected");
+                document.getElementById("image-title").innerHTML = images[i+1].title;
+                setButtonState(i+1);
+                break;
+            }
+        }
+    }
+
+    function prevImage() {
+        var current_image = document.getElementById("view-image");
+        for (i = 0; i < images.length; i++) {
+            if (images[i].src == current_image.src) {
+                current_image.src = images[i-1].src;
+                images[i].classList.remove("image-selected");
+                images[i-1].classList.add("image-selected");
+                document.getElementById("image-title").innerHTML = images[i-1].title;
+                setButtonState(i-1);
+                break;
+            }
+        }
+    }
+
+</script>
 {% endblock content %}

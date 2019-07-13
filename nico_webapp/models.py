@@ -11,13 +11,11 @@ def load_user(user_id):
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_file = db.Column(db.String(120), nullable=False)
-    preview_image = db.Column(db.String(120), nullable=False)
     title = db.Column(db.String(60), nullable=True, unique=True)
     description = db.Column(db.String(1000), nullable=True)
 
     def __repr__(self):
-        image = {'image_file': self.image_file, 'preview_image': self.preview_image, 'title': self.title,
-                 'description': self.description }
+        image = {'image_file': self.image_file, 'title': self.title, 'description': self.description }
         return json.dumps(image)
 
 

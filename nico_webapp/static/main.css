@@ -1,21 +1,31 @@
-.nav-bar {
-    justify-content: center;
+@font-face {
+    font-family: "Mermaid";
+    src: url(/static/fonts/Mermaid1001.ttf) format("truetype");
+
+    font-family: "Roboto-Regular";
+    src: url(/static/fonts/Roboto-Regular.ttf) format("truetype");
+}
+
+.site-title {
+    font-family: "Mermaid";
+    font-size: 35pt;
+    margin: 0;
+    color: #ee6a40;
 }
 
 header {
-    height: 100px;
+    height: 305px;
     width: 100%;
     text-align: center;
-    background: #DDDDDD;
     position: absolute;
 }
 
 main {
-    padding-top: 100px;
+    padding-top: 305px;
     margin-bottom: -50px;
     min-height: 100%;
     width: 100%;
-    background: #ffecbf;
+    background: #f4eddc;
 }
 
 footer {
@@ -23,11 +33,155 @@ footer {
     width: 100%;
     padding: 5px;
     text-align: center;
-    background: #DDDDDD;
 }
 
 .push {
     height: 50px;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background: #ffecbf;
+    margin: 0;
+    color: #b8321c;
+    font-family: Roboto-Regular;
+}
+
+body {
+    overflow-y: scroll;
+}
+
+.nav-bar {
+    padding-top: 5px;
+    justify-content: center;
+    width: 100%;
+}
+
+.nav-link {
+    user-select: none;
+    color: #b8321c;
+    margin: 0 20px 0 20px;
+    font-size: 15pt;
+}
+
+.nav-link:hover {
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.content {
+    padding: 0px 20px 20px 20px;
+    background: #f4eddc;
+    margin-left: 12%;
+    margin-right: 12%;
+    border-top: solid 1px;
+    border-color: #f5b9a6;
+}
+
+.image-container {
+    position: relative;
+    width: 100%
+    overflow: hidden;
+}
+
+.image-container .content-overlay {
+  background: rgba(245, 126, 66, 0.2);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  -webkit-transition: all 0.4s ease-in-out 0s;
+  -moz-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+.image-container:hover .content-overlay{
+  opacity: 1;
+}
+
+.content-image{
+  width: 100%;
+}
+
+.content-details {
+  position: absolute;
+  text-align: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.image-container:hover .content-details{
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+}
+
+.content-details h3{
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+}
+
+.content-details p{
+  color: #fff;
+  font-size: 0.8em;
+}
+
+.fadeIn-bottom{
+  top: 80%;
+}
+
+.centered {
+    text-align: center;
+}
+
+.preview-image {
+    height: 230px;
+    width: 230px;
+    object-fit: cover;
+}
+
+.preview-image:hover {
+    opacity: 0.3;
+    border: solid 1px black;
+}
+
+.image-selected {
+    border: solid 2px blue;
+    opacity: 1;
+}
+
+#view-image {
+    width: 100%;
+    height: 450px;
+    object-fit: contain;
+}
+
+#image-description {
+    margin: 0 40px 0 40px;
+    padding: 20px;
+}
+
+.layout-div {
+    margin: 2% 2% 2% 2%;
+    display: inline-block;
 }
 
 .social-media {
@@ -35,51 +189,7 @@ footer {
     width: 40px;
 }
 
-.image-container {
-    height: 260px;
-    width: auto;
-    padding: 0 2% 0 2%;
-    margin: 0 1% 0 1%;
-    text-align: center;
-    display: inline-block;
-}
-
-.preview-image {
-    height: 200px;
-    width: 200px;
-    object-fit: cover;
-}
-
-.view-image {
-    width: 100%;
-    height: 600px;
-    object-fit: contain;
-}
-
-.gallery {
-    width: 100%;
-    overflow-x: auto;
-    white-space: nowrap;
-}
-
-.centered {
-    text-align: center;
-}
-
-.content {
-    padding: 20px;
-    background: #ffdf94;
-    margin-left: 12%;
-    margin-right: 12%;
-}
-
-.image-description {
-    margin: 0 40px 0 40px;
-}
-
-html, body {
-    height: 100%;
-    background: #ffecbf;
-    margin: 0;
+#expanded_container {
+    margin-top: 10px;
 }
 
