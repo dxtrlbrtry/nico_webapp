@@ -1,12 +1,23 @@
 {% extends 'layout.html' %}
 {% block content %}
-<a class="nav-link" href="{{ url_for('main.upload_image') }}">Upload</a>
+<div class="row nav-bar">
+    <a class="nav-link" href="{{ url_for('main.visitors') }}">Visitors</a>
+    <a class="nav-link" href="{{ url_for('main.upload_image') }}">Upload</a>
+</div>
 {% for image in images %}
     <div class="row">
-        <img style="height: 40px; width: 40px;" src="{{ url_for('static', filename='pictures/' + image.image_file) }}"/>
+        <a href="{{ url_for('main.move_up', image_id=image.id) }}">Up</a>
+        <p> / </p>
+        <a href="{{ url_for('main.move_down', image_id=image.id) }}">Down</a>
+        <img style="height: 40px; width: 40px;" src="{{ url_for('static', filename='pictures/' + image.preview_image) }}"/>
         <p>{{ image.title }}</p>
         <a class="nav-link align-right" href="{{ url_for('main.edit_image', image_id=image.id) }}">Edit</a>
         <a class="nav-link align-right" href="{{ url_for('main.delete_image', image_id=image.id) }}">Delete</a>
+        <p>Col</p>
+        <input type="number" min="1" max="12" value="{{ image.column_span }}" id="col_{{ image.id }}">
+        <p>Row</p>
+        <input type="number" min="1" max="3" value="{{ image.row_span }}" id="row_{{ image.id }}">
+        <button id="{{ image.id }}" onclick="apply_span(event)">Apply</button>
     </div>
 {% endfor %}
 {% endblock content %}

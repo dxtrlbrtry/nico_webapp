@@ -7,7 +7,6 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 mail = Mail()
 
-
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -24,5 +23,4 @@ def create_app():
 
     from nico_webapp.main.routes import main
     app.register_blueprint(main)
-
     return app

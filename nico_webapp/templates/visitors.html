@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div>
+    <h3>Visitors</h3>
+    <h4>Total: {{ visitors|count }}</h4>
+    <table>
+        <tr>
+            <th>Ip address</th>
+            <th>Times Visited</th>
+            <th>First Visited</th>
+            <th>Last Visited</th>
+            <th>Location</th>
+        </tr>
+        {% for visitor in visitors %}
+        <tr>
+            <td>{{ visitor.ip_address }}</td>
+            <td>{{ visitor.times_visited }}</td>
+            <td>{{ visitor.first_visited }}</td>
+            <td>{{ visitor.last_visited }}</td>
+            <td>{{ visitor.country }}</td>
+            <td><img src="{{ visitor.country_flag }}"></td>
+        {% endfor %}
+        </tr>
+    </table>
+
+</div>
+{% endblock content %}

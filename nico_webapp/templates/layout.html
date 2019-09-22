@@ -5,11 +5,12 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="{{ url_for('static', filename='icons/site-logo.png') }}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='javascript.js') }}"></script>
     {% if title %}
     <title> Nico Web - {{ title }} </title>
     {% else %}
@@ -17,36 +18,46 @@
     {% endif %}
 </head>
 <body>
-    <header class="header">
-        <div class="centered">
-            <a href="{{ url_for('main.home') }}">
-                <img class="mt-3" src="{{ url_for('static', filename='icons/site-logo.png') }}" style="width: 180px; height: 180px;"/>
-            </a>
-            <h1 class="site-title">Graphic Designer & Visual Artist</h1>
-        </div>
-        <div class="row nav-bar">
-            <a class="nav-link" href="{{ url_for('main.home') }}">Gallery</a>
-            <a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a>
-            <a class="nav-link" href="https://society6.com/nicoseb" target="_blank">Store</a>
-            <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
-        </div>
-    </header>
-    <main role="main">
-        <div class="content">
-            {% block content %}
+<div class="header">
+    <div class="centered">
+        <a href="{{ url_for('main.home') }}">
+            <img id="site-logo" src="{{ url_for('static', filename='icons/site-logo.png') }}"/>
+        </a>
+        <h1 class="site-title">Graphic Designer & Visual Artist</h1>
+    </div>
+    <div class="row nav-bar">
+        <a id="tabGallery" class="nav-link" href="{{ url_for('main.home') }}">Gallery</a>
+        <a id="tabContact" class="nav-link" href="{{ url_for('main.contact') }}">Contact</a>
+        <a class="nav-link" href="https://society6.com/nicoseb" target="_blank">Store</a>
+        <a id="tabAbout" class="nav-link" href="{{ url_for('main.about') }}">About</a>
+        {% if current_user.is_authenticated %}
+        <a id="tabManage" class="nav-link" href="{{ url_for('main.manage') }}">Manage</a>
+        {% endif %}
+    </div>
+</div>
+<main role="main">
+    <div class="content">
+        {% block content %}
 
-            {% endblock content %}
-        </div>
-        <div class="push"></div>
-    </main>
-    <footer>
+        {% endblock content %}
+    </div>
+    <div class="push"></div>
+</main>
+        <div class="contact-icons" align="center">
         <a href="https://www.facebook.com/niQboy/" target="_blank">
-            <img class="social-media" src="{{ url_for('static', filename='icons/Facebook-Icon.png') }}"/>
+            <img class="social-media" src="{{ url_for('static', filename='icons/facebook-icon.png') }}"/>
         </a>
         <a href="https://www.instagram.com/buyingnewsoul/" target="_blank">
-            <img class="social-media" src="{{ url_for('static', filename='icons/Instagram-Icon.png') }}"/>
+            <img class="social-media" src="{{ url_for('static', filename='icons/instagram-icon.png') }}"/>
         </a>
-    </footer>
+        <a href="https://www.behance.net/nicohavia/" target="_blank">
+            <img class="social-media" src="{{ url_for('static', filename='icons/behance-icon.png') }}"/>
+        </a>
+        <a href="mailto:nico_havia@hotmail.com">
+            <img class="social-media" src="{{ url_for('static', filename='icons/mail-icon.png') }}"/>
+        </a>
+    </div>
+    <p class="copyright-text" style="padding-bottom: 1%">All content © Nico Sebastian Havia 2019.</p>
 <script src="{{ url_for('static', filename='bootstrap.bundle.js') }}"></script>
 </body>
 </html>

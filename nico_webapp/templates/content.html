@@ -3,21 +3,29 @@
 <div id="expanded_container" style="display: none;">
     <div class="centered">
         <h3 id="image-title"></h3>
-        <img id="view-image" src=""/>
+        <div style="position: relative; display: inline-block; width: 100%;">
+            <div class="row" style="position: absolute; height: 100%; width: 100%; margin: 0px;">
+                <div style="width: 50%;" onclick="prevImage()"></div>
+                <div style="width: 50%;" onclick="nextImage()"></div>
+            </div>
+            <div class="loader" style="position: absolute; display: none;"></div>
+            <img title="" id="view-image" src=""/>
+        </div>
     </div>
     <div class="row nav-bar">
         <a class="nav-link" id="btnPrev" onclick="prevImage()">Prev</a>
         <a class="nav-link" id="btnNext" onclick="nextImage()">Next</a>
     </div>
 </div>
-<div class="centered">
+<div align="center" class="gallery">
     {% for image in images %}
-    <div class="layout-div">
+    <div class="layout-div" style="grid-column: span {{ image.column_span }}; grid-row: span {{ image.row_span }};">
         <div class="image-container">
             <a onclick="showImage({{ image }})">
                 <div class="content-overlay"></div>
                 <img title="{{ image.title }}" class="preview-image"
-                 src="{{ url_for('static', filename='pictures/' + image.image_file) }}"/>
+                 src="{{ url_for('static', filename='pictures/' + image.preview_image) }}"
+                 name="{{ url_for('static', filename='pictures/' + image.image_file) }}"/>
                 <div class="content-details fadeIn-bottom">
                     <h3 class="content-title">{{ image.title }}</h3>
                 </div>
@@ -27,57 +35,56 @@
     {% endfor %}
 </div>
 <script>
+setActiveTab("tabGallery");
+
+    document.addEventListener('keydown', function(event) {
+        if(event.keyCode == 37) {
+            prevImage();
+        }
+        else if(event.keyCode == 39) {
+            nextImage();
+        }
+    });
+
     var images = document.getElementsByClassName("preview-image");
     var expanded_container = document.getElementById("expanded_container");
 
     function showImage(image) {
         document.getElementById("view-image").src = '/static/pictures/' + image.image_file;
+        document.getElementById("view-image").title = image.title;
         document.getElementById("image-title").innerHTML = image.title;
 
         for (i = 0; i < images.length; i++) {
             if (image.title == images[i].title) {
                 images[i].classList.add("image-selected");
-                setButtonState(i);
             }
             else {
                 images[i].classList.remove("image-selected");
             }
         }
         expanded_container.style.display = "block";
+        expanded_container.scrollIntoView({block: "center"});
     }
-
-    function setButtonState(index) {
-        var btnPrev = document.getElementById("btnPrev");
-        if (index == 0) {
-            btnPrev.onclick = false;
-            btnPrev.style.color = "gray";
-        }
-        else {
-            btnPrev.onclick = prevImage;
-            btnPrev.style.color = "#b8321c";
-        }
-
-        var btnNext = document.getElementById("btnNext");
-        if (index == images.length-1) {
-            btnNext.onclick = false;
-            btnNext.style.color = "gray";
-        }
-        else {
-            btnNext.onclick = nextImage;
-            btnNext.style.color = "#b8321c";
-        }
-    }
-
 
     function nextImage() {
         var current_image = document.getElementById("view-image");
         for (i = 0; i < images.length; i++) {
-            if (images[i].src == current_image.src) {
-                current_image.src = images[i+1].src;
+            if (images[i].title == current_image.title) {
+                if (i == images.length-1) {
+                    current_image.src = images[0].name;
+                    current_image.title = images[0].title;
+                    images[0].classList.add("image-selected");
+                    document.getElementById("image-title").innerHTML = images[0].title;
+
+                }
+                else {
+                    current_image.src = images[i+1].name;
+                    current_image.title = images[i+1].title;
+                    images[i+1].classList.add("image-selected");
+                    document.getElementById("image-title").innerHTML = images[i+1].title;
+                }
                 images[i].classList.remove("image-selected");
-                images[i+1].classList.add("image-selected");
-                document.getElementById("image-title").innerHTML = images[i+1].title;
-                setButtonState(i+1);
+                current_image.scrollIntoView({block: "center"});
                 break;
             }
         }
@@ -86,16 +93,24 @@
     function prevImage() {
         var current_image = document.getElementById("view-image");
         for (i = 0; i < images.length; i++) {
-            if (images[i].src == current_image.src) {
-                current_image.src = images[i-1].src;
+            if (images[i].title == current_image.title) {
+                if (i == 0) {
+                    current_image.src = images[images.length-1].name;
+                    current_image.title = images[images.length-1].title;
+                    images[images.length-1].classList.add("image-selected");
+                    document.getElementById("image-title").innerHTML = images[images.length-1].title;
+                }
+                else {
+                    current_image.src = images[i-1].name;
+                    current_image.title = images[i-1].title;
+                    images[i-1].classList.add("image-selected");
+                    document.getElementById("image-title").innerHTML = images[i-1].title;
+                }
                 images[i].classList.remove("image-selected");
-                images[i-1].classList.add("image-selected");
-                document.getElementById("image-title").innerHTML = images[i-1].title;
-                setButtonState(i-1);
+                current_image.scrollIntoView({block: "center"});
                 break;
             }
         }
     }
-
 </script>
 {% endblock content %}
